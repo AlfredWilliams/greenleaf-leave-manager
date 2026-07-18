@@ -52,7 +52,7 @@ function ProfilePage() {
   });
   const { data: positions } = useQuery({
     queryKey: ["positions-all"],
-    queryFn: async () => (await supabase.from("positions").select("id, title").order("title")).data ?? [],
+    queryFn: async () => (await supabase.from("positions").select("id, name").order("name")).data ?? [],
   });
 
   const [form, setForm] = useState({
@@ -235,7 +235,7 @@ function ProfilePage() {
               <SelectTrigger><SelectValue placeholder="Select position…" /></SelectTrigger>
               <SelectContent>
                 {(positions ?? []).map((p) => (
-                  <SelectItem key={p.id} value={p.id}>{p.title}</SelectItem>
+                  <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
