@@ -92,10 +92,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Enterprise leave management platform for Benso Oil Palm Plantation Limited.",
+          "Enterprise leave management platform for Benso Oil Palm Plantation Limited — apply, approve, and track staff leave across the plantation.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "BOPP Leave Management System" },
+      { name: "twitter:description", content: "Enterprise leave management platform for Benso Oil Palm Plantation Limited — apply, approve, and track staff leave across the plantation." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5e1119a6-6188-41ba-811e-8e8966cd088e/id-preview-50ce54a4--446caf9c-e3b4-483c-87ea-dfba24cd5a08.lovable.app-1784382620157.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5e1119a6-6188-41ba-811e-8e8966cd088e/id-preview-50ce54a4--446caf9c-e3b4-483c-87ea-dfba24cd5a08.lovable.app-1784382620157.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
