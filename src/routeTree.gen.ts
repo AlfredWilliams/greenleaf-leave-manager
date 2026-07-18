@@ -16,6 +16,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedLeaveRequestsRouteImport } from './routes/_authenticated/leave-requests'
+import { Route as AuthenticatedDepartmentsRouteImport } from './routes/_authenticated/departments'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedEmployeesIndexRouteImport } from './routes/_authenticated/employees/index'
@@ -56,6 +57,12 @@ const AuthenticatedLeaveRequestsRoute =
     path: '/leave-requests',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDepartmentsRoute =
+  AuthenticatedDepartmentsRouteImport.update({
+    id: '/departments',
+    path: '/departments',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/departments': typeof AuthenticatedDepartmentsRoute
   '/leave-requests': typeof AuthenticatedLeaveRequestsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/employees/$id': typeof AuthenticatedEmployeesIdRoute
@@ -98,6 +106,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/departments': typeof AuthenticatedDepartmentsRoute
   '/leave-requests': typeof AuthenticatedLeaveRequestsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/employees/$id': typeof AuthenticatedEmployeesIdRoute
@@ -112,6 +121,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/departments': typeof AuthenticatedDepartmentsRoute
   '/_authenticated/leave-requests': typeof AuthenticatedLeaveRequestsRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/employees/$id': typeof AuthenticatedEmployeesIdRoute
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/approvals'
     | '/dashboard'
+    | '/departments'
     | '/leave-requests'
     | '/profile'
     | '/employees/$id'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/approvals'
     | '/dashboard'
+    | '/departments'
     | '/leave-requests'
     | '/profile'
     | '/employees/$id'
@@ -151,6 +163,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/approvals'
     | '/_authenticated/dashboard'
+    | '/_authenticated/departments'
     | '/_authenticated/leave-requests'
     | '/_authenticated/profile'
     | '/_authenticated/employees/$id'
@@ -216,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLeaveRequestsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/departments': {
+      id: '/_authenticated/departments'
+      path: '/departments'
+      fullPath: '/departments'
+      preLoaderRoute: typeof AuthenticatedDepartmentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -250,6 +270,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDepartmentsRoute: typeof AuthenticatedDepartmentsRoute
   AuthenticatedLeaveRequestsRoute: typeof AuthenticatedLeaveRequestsRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedEmployeesIdRoute: typeof AuthenticatedEmployeesIdRoute
@@ -259,6 +280,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDepartmentsRoute: AuthenticatedDepartmentsRoute,
   AuthenticatedLeaveRequestsRoute: AuthenticatedLeaveRequestsRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedEmployeesIdRoute: AuthenticatedEmployeesIdRoute,
