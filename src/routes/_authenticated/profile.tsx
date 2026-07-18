@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/profile")({
 const profileSchema = z.object({
   full_name: z.string().trim().min(2).max(100),
   phone: z.string().trim().max(20).optional().or(z.literal("")),
-  gender: z.enum(["male", "female", "other", "prefer_not_to_say"]).optional().nullable(),
+  gender: z.enum(["male", "female", "other"]).optional().nullable(),
   employee_code: z.string().trim().max(30).optional().or(z.literal("")),
   department_id: z.string().uuid().optional().nullable(),
   section_id: z.string().uuid().optional().nullable(),
