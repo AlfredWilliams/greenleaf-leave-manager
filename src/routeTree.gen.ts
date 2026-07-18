@@ -14,6 +14,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedLeaveTypesRouteImport } from './routes/_authenticated/leave-types'
 import { Route as AuthenticatedLeaveRequestsRouteImport } from './routes/_authenticated/leave-requests'
@@ -46,6 +47,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/leave-requests': typeof AuthenticatedLeaveRequestsRoute
   '/leave-types': typeof AuthenticatedLeaveTypesRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/employees/$id': typeof AuthenticatedEmployeesIdRoute
   '/employees/': typeof AuthenticatedEmployeesIndexRoute
 }
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/leave-requests': typeof AuthenticatedLeaveRequestsRoute
   '/leave-types': typeof AuthenticatedLeaveTypesRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/employees/$id': typeof AuthenticatedEmployeesIdRoute
   '/employees': typeof AuthenticatedEmployeesIndexRoute
 }
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/_authenticated/leave-requests': typeof AuthenticatedLeaveRequestsRoute
   '/_authenticated/leave-types': typeof AuthenticatedLeaveTypesRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/employees/$id': typeof AuthenticatedEmployeesIdRoute
   '/_authenticated/employees/': typeof AuthenticatedEmployeesIndexRoute
 }
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/leave-requests'
     | '/leave-types'
     | '/profile'
+    | '/reports'
     | '/employees/$id'
     | '/employees/'
   fileRoutesByTo: FileRoutesByTo
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/leave-requests'
     | '/leave-types'
     | '/profile'
+    | '/reports'
     | '/employees/$id'
     | '/employees'
   id:
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/_authenticated/leave-requests'
     | '/_authenticated/leave-types'
     | '/_authenticated/profile'
+    | '/_authenticated/reports'
     | '/_authenticated/employees/$id'
     | '/_authenticated/employees/'
   fileRoutesById: FileRoutesById
@@ -226,6 +238,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
@@ -293,6 +312,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedLeaveRequestsRoute: typeof AuthenticatedLeaveRequestsRoute
   AuthenticatedLeaveTypesRoute: typeof AuthenticatedLeaveTypesRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedEmployeesIdRoute: typeof AuthenticatedEmployeesIdRoute
   AuthenticatedEmployeesIndexRoute: typeof AuthenticatedEmployeesIndexRoute
 }
@@ -304,6 +324,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedLeaveRequestsRoute: AuthenticatedLeaveRequestsRoute,
   AuthenticatedLeaveTypesRoute: AuthenticatedLeaveTypesRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedEmployeesIdRoute: AuthenticatedEmployeesIdRoute,
   AuthenticatedEmployeesIndexRoute: AuthenticatedEmployeesIndexRoute,
 }
