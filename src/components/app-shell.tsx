@@ -47,8 +47,7 @@ const NAV: NavItem[] = [
   { to: "/employees", label: "Employees", icon: Users, roles: ["hr_officer", "system_admin", "dept_head"] },
   { to: "/departments", label: "Departments", icon: Building2, roles: ["hr_officer", "system_admin"] },
   { to: "/leave-types", label: "Leave Types", icon: CalendarDays, roles: ["hr_officer", "system_admin"] },
-  { to: "/reports", label: "Reports", icon: BarChart3, roles: ["hr_officer", "system_admin", "dept_head"] },
-  { to: "/settings", label: "Settings", icon: Settings, roles: ["system_admin"] },
+  { to: "/holidays", label: "Public Holidays", icon: CalendarDays, roles: ["hr_officer", "system_admin"] },
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
