@@ -31,6 +31,7 @@ import { BoppLogo } from "@/components/bopp-logo";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
+import { NotificationBell } from "@/components/notification-bell";
 
 type NavItem = {
   to: string;
