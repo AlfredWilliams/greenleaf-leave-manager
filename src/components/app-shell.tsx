@@ -151,7 +151,9 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
         <Menu className="h-5 w-5" />
       </Button>
       <div className="flex-1" />
+      <NotificationBell />
       <ThemeToggle />
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-2 rounded-full p-1 pr-3 transition hover:bg-accent">
