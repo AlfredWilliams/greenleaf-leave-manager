@@ -14,15 +14,16 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
-import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedLeaveTypesRouteImport } from './routes/_authenticated/leave-types'
-import { Route as AuthenticatedLeaveRequestsRouteImport } from './routes/_authenticated/leave-requests'
+import { Route as AuthenticatedHolidaysRouteImport } from './routes/_authenticated/holidays'
 import { Route as AuthenticatedDepartmentsRouteImport } from './routes/_authenticated/departments'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
+import { Route as AuthenticatedLeaveRequestsIndexRouteImport } from './routes/_authenticated/leave-requests.index'
 import { Route as AuthenticatedEmployeesIndexRouteImport } from './routes/_authenticated/employees/index'
+import { Route as AuthenticatedLeaveRequestsNewRouteImport } from './routes/_authenticated/leave-requests.new'
+import { Route as AuthenticatedLeaveRequestsIdRouteImport } from './routes/_authenticated/leave-requests.$id'
 import { Route as AuthenticatedEmployeesIdRouteImport } from './routes/_authenticated/employees/$id'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -49,16 +50,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -69,12 +60,11 @@ const AuthenticatedLeaveTypesRoute = AuthenticatedLeaveTypesRouteImport.update({
   path: '/leave-types',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedLeaveRequestsRoute =
-  AuthenticatedLeaveRequestsRouteImport.update({
-    id: '/leave-requests',
-    path: '/leave-requests',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
+const AuthenticatedHolidaysRoute = AuthenticatedHolidaysRouteImport.update({
+  id: '/holidays',
+  path: '/holidays',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDepartmentsRoute =
   AuthenticatedDepartmentsRouteImport.update({
     id: '/departments',
@@ -91,10 +81,28 @@ const AuthenticatedApprovalsRoute = AuthenticatedApprovalsRouteImport.update({
   path: '/approvals',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedLeaveRequestsIndexRoute =
+  AuthenticatedLeaveRequestsIndexRouteImport.update({
+    id: '/leave-requests/',
+    path: '/leave-requests/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedEmployeesIndexRoute =
   AuthenticatedEmployeesIndexRouteImport.update({
     id: '/employees/',
     path: '/employees/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLeaveRequestsNewRoute =
+  AuthenticatedLeaveRequestsNewRouteImport.update({
+    id: '/leave-requests/new',
+    path: '/leave-requests/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLeaveRequestsIdRoute =
+  AuthenticatedLeaveRequestsIdRouteImport.update({
+    id: '/leave-requests/$id',
+    path: '/leave-requests/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedEmployeesIdRoute =
@@ -112,13 +120,14 @@ export interface FileRoutesByFullPath {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/departments': typeof AuthenticatedDepartmentsRoute
-  '/leave-requests': typeof AuthenticatedLeaveRequestsRoute
+  '/holidays': typeof AuthenticatedHolidaysRoute
   '/leave-types': typeof AuthenticatedLeaveTypesRoute
   '/profile': typeof AuthenticatedProfileRoute
-  '/reports': typeof AuthenticatedReportsRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/employees/$id': typeof AuthenticatedEmployeesIdRoute
+  '/leave-requests/$id': typeof AuthenticatedLeaveRequestsIdRoute
+  '/leave-requests/new': typeof AuthenticatedLeaveRequestsNewRoute
   '/employees/': typeof AuthenticatedEmployeesIndexRoute
+  '/leave-requests/': typeof AuthenticatedLeaveRequestsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -128,13 +137,14 @@ export interface FileRoutesByTo {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/departments': typeof AuthenticatedDepartmentsRoute
-  '/leave-requests': typeof AuthenticatedLeaveRequestsRoute
+  '/holidays': typeof AuthenticatedHolidaysRoute
   '/leave-types': typeof AuthenticatedLeaveTypesRoute
   '/profile': typeof AuthenticatedProfileRoute
-  '/reports': typeof AuthenticatedReportsRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/employees/$id': typeof AuthenticatedEmployeesIdRoute
+  '/leave-requests/$id': typeof AuthenticatedLeaveRequestsIdRoute
+  '/leave-requests/new': typeof AuthenticatedLeaveRequestsNewRoute
   '/employees': typeof AuthenticatedEmployeesIndexRoute
+  '/leave-requests': typeof AuthenticatedLeaveRequestsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -146,13 +156,14 @@ export interface FileRoutesById {
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/departments': typeof AuthenticatedDepartmentsRoute
-  '/_authenticated/leave-requests': typeof AuthenticatedLeaveRequestsRoute
+  '/_authenticated/holidays': typeof AuthenticatedHolidaysRoute
   '/_authenticated/leave-types': typeof AuthenticatedLeaveTypesRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
-  '/_authenticated/reports': typeof AuthenticatedReportsRoute
-  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/employees/$id': typeof AuthenticatedEmployeesIdRoute
+  '/_authenticated/leave-requests/$id': typeof AuthenticatedLeaveRequestsIdRoute
+  '/_authenticated/leave-requests/new': typeof AuthenticatedLeaveRequestsNewRoute
   '/_authenticated/employees/': typeof AuthenticatedEmployeesIndexRoute
+  '/_authenticated/leave-requests/': typeof AuthenticatedLeaveRequestsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -164,13 +175,14 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/dashboard'
     | '/departments'
-    | '/leave-requests'
+    | '/holidays'
     | '/leave-types'
     | '/profile'
-    | '/reports'
-    | '/settings'
     | '/employees/$id'
+    | '/leave-requests/$id'
+    | '/leave-requests/new'
     | '/employees/'
+    | '/leave-requests/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -180,13 +192,14 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/dashboard'
     | '/departments'
-    | '/leave-requests'
+    | '/holidays'
     | '/leave-types'
     | '/profile'
-    | '/reports'
-    | '/settings'
     | '/employees/$id'
+    | '/leave-requests/$id'
+    | '/leave-requests/new'
     | '/employees'
+    | '/leave-requests'
   id:
     | '__root__'
     | '/'
@@ -197,13 +210,14 @@ export interface FileRouteTypes {
     | '/_authenticated/approvals'
     | '/_authenticated/dashboard'
     | '/_authenticated/departments'
-    | '/_authenticated/leave-requests'
+    | '/_authenticated/holidays'
     | '/_authenticated/leave-types'
     | '/_authenticated/profile'
-    | '/_authenticated/reports'
-    | '/_authenticated/settings'
     | '/_authenticated/employees/$id'
+    | '/_authenticated/leave-requests/$id'
+    | '/_authenticated/leave-requests/new'
     | '/_authenticated/employees/'
+    | '/_authenticated/leave-requests/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -251,20 +265,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/reports': {
-      id: '/_authenticated/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof AuthenticatedReportsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
@@ -279,11 +279,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLeaveTypesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/leave-requests': {
-      id: '/_authenticated/leave-requests'
-      path: '/leave-requests'
-      fullPath: '/leave-requests'
-      preLoaderRoute: typeof AuthenticatedLeaveRequestsRouteImport
+    '/_authenticated/holidays': {
+      id: '/_authenticated/holidays'
+      path: '/holidays'
+      fullPath: '/holidays'
+      preLoaderRoute: typeof AuthenticatedHolidaysRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/departments': {
@@ -307,11 +307,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedApprovalsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/leave-requests/': {
+      id: '/_authenticated/leave-requests/'
+      path: '/leave-requests'
+      fullPath: '/leave-requests/'
+      preLoaderRoute: typeof AuthenticatedLeaveRequestsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/employees/': {
       id: '/_authenticated/employees/'
       path: '/employees'
       fullPath: '/employees/'
       preLoaderRoute: typeof AuthenticatedEmployeesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/leave-requests/new': {
+      id: '/_authenticated/leave-requests/new'
+      path: '/leave-requests/new'
+      fullPath: '/leave-requests/new'
+      preLoaderRoute: typeof AuthenticatedLeaveRequestsNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/leave-requests/$id': {
+      id: '/_authenticated/leave-requests/$id'
+      path: '/leave-requests/$id'
+      fullPath: '/leave-requests/$id'
+      preLoaderRoute: typeof AuthenticatedLeaveRequestsIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/employees/$id': {
@@ -328,26 +349,28 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDepartmentsRoute: typeof AuthenticatedDepartmentsRoute
-  AuthenticatedLeaveRequestsRoute: typeof AuthenticatedLeaveRequestsRoute
+  AuthenticatedHolidaysRoute: typeof AuthenticatedHolidaysRoute
   AuthenticatedLeaveTypesRoute: typeof AuthenticatedLeaveTypesRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
-  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedEmployeesIdRoute: typeof AuthenticatedEmployeesIdRoute
+  AuthenticatedLeaveRequestsIdRoute: typeof AuthenticatedLeaveRequestsIdRoute
+  AuthenticatedLeaveRequestsNewRoute: typeof AuthenticatedLeaveRequestsNewRoute
   AuthenticatedEmployeesIndexRoute: typeof AuthenticatedEmployeesIndexRoute
+  AuthenticatedLeaveRequestsIndexRoute: typeof AuthenticatedLeaveRequestsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDepartmentsRoute: AuthenticatedDepartmentsRoute,
-  AuthenticatedLeaveRequestsRoute: AuthenticatedLeaveRequestsRoute,
+  AuthenticatedHolidaysRoute: AuthenticatedHolidaysRoute,
   AuthenticatedLeaveTypesRoute: AuthenticatedLeaveTypesRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
-  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
-  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedEmployeesIdRoute: AuthenticatedEmployeesIdRoute,
+  AuthenticatedLeaveRequestsIdRoute: AuthenticatedLeaveRequestsIdRoute,
+  AuthenticatedLeaveRequestsNewRoute: AuthenticatedLeaveRequestsNewRoute,
   AuthenticatedEmployeesIndexRoute: AuthenticatedEmployeesIndexRoute,
+  AuthenticatedLeaveRequestsIndexRoute: AuthenticatedLeaveRequestsIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

@@ -31,6 +31,7 @@ import { BoppLogo } from "@/components/bopp-logo";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
+import { NotificationBell } from "@/components/notification-bell";
 
 type NavItem = {
   to: string;
@@ -46,8 +47,7 @@ const NAV: NavItem[] = [
   { to: "/employees", label: "Employees", icon: Users, roles: ["hr_officer", "system_admin", "dept_head"] },
   { to: "/departments", label: "Departments", icon: Building2, roles: ["hr_officer", "system_admin"] },
   { to: "/leave-types", label: "Leave Types", icon: CalendarDays, roles: ["hr_officer", "system_admin"] },
-  { to: "/reports", label: "Reports", icon: BarChart3, roles: ["hr_officer", "system_admin", "dept_head"] },
-  { to: "/settings", label: "Settings", icon: Settings, roles: ["system_admin"] },
+  { to: "/holidays", label: "Public Holidays", icon: CalendarDays, roles: ["hr_officer", "system_admin"] },
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -151,7 +151,9 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
         <Menu className="h-5 w-5" />
       </Button>
       <div className="flex-1" />
+      <NotificationBell />
       <ThemeToggle />
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-2 rounded-full p-1 pr-3 transition hover:bg-accent">

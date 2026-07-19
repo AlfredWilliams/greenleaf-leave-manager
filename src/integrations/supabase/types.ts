@@ -157,6 +157,200 @@ export type Database = {
           },
         ]
       }
+      leave_approvals: {
+        Row: {
+          action: Database["public"]["Enums"]["approval_action"]
+          approver_id: string
+          approver_role: Database["public"]["Enums"]["app_role"]
+          comment: string | null
+          created_at: string
+          from_status: Database["public"]["Enums"]["leave_status"] | null
+          id: string
+          leave_request_id: string
+          to_status: Database["public"]["Enums"]["leave_status"] | null
+        }
+        Insert: {
+          action: Database["public"]["Enums"]["approval_action"]
+          approver_id: string
+          approver_role: Database["public"]["Enums"]["app_role"]
+          comment?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["leave_status"] | null
+          id?: string
+          leave_request_id: string
+          to_status?: Database["public"]["Enums"]["leave_status"] | null
+        }
+        Update: {
+          action?: Database["public"]["Enums"]["approval_action"]
+          approver_id?: string
+          approver_role?: Database["public"]["Enums"]["app_role"]
+          comment?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["leave_status"] | null
+          id?: string
+          leave_request_id?: string
+          to_status?: Database["public"]["Enums"]["leave_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leave_approvals_approver_id_fkey"
+            columns: ["approver_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leave_approvals_leave_request_id_fkey"
+            columns: ["leave_request_id"]
+            isOneToOne: false
+            referencedRelation: "leave_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leave_documents: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_size: number
+          id: string
+          leave_request_id: string
+          mime_type: string
+          storage_path: string
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_size: number
+          id?: string
+          leave_request_id: string
+          mime_type: string
+          storage_path: string
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_size?: number
+          id?: string
+          leave_request_id?: string
+          mime_type?: string
+          storage_path?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leave_documents_leave_request_id_fkey"
+            columns: ["leave_request_id"]
+            isOneToOne: false
+            referencedRelation: "leave_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leave_documents_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leave_requests: {
+        Row: {
+          approved_at: string | null
+          cancelled_at: string | null
+          created_at: string
+          department_id: string | null
+          employee_id: string
+          end_date: string
+          holiday_days: number
+          id: string
+          leave_type_id: string
+          reason: string | null
+          rejected_at: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["leave_status"]
+          submitted_at: string | null
+          supervisor_id: string | null
+          total_calendar_days: number
+          updated_at: string
+          weekend_days: number
+          working_days: number
+        }
+        Insert: {
+          approved_at?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          department_id?: string | null
+          employee_id: string
+          end_date: string
+          holiday_days?: number
+          id?: string
+          leave_type_id: string
+          reason?: string | null
+          rejected_at?: string | null
+          start_date: string
+          status?: Database["public"]["Enums"]["leave_status"]
+          submitted_at?: string | null
+          supervisor_id?: string | null
+          total_calendar_days?: number
+          updated_at?: string
+          weekend_days?: number
+          working_days?: number
+        }
+        Update: {
+          approved_at?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          department_id?: string | null
+          employee_id?: string
+          end_date?: string
+          holiday_days?: number
+          id?: string
+          leave_type_id?: string
+          reason?: string | null
+          rejected_at?: string | null
+          start_date?: string
+          status?: Database["public"]["Enums"]["leave_status"]
+          submitted_at?: string | null
+          supervisor_id?: string | null
+          total_calendar_days?: number
+          updated_at?: string
+          weekend_days?: number
+          working_days?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leave_requests_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leave_requests_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leave_requests_leave_type_id_fkey"
+            columns: ["leave_type_id"]
+            isOneToOne: false
+            referencedRelation: "leave_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leave_requests_supervisor_id_fkey"
+            columns: ["supervisor_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leave_types: {
         Row: {
           created_at: string
@@ -190,6 +384,36 @@ export type Database = {
           name?: string
           requires_document?: boolean
           updated_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          read?: boolean
+          title?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -290,6 +514,89 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      _audit: {
+        Args: {
+          _action: string
+          _entity: string
+          _entity_id: string
+          _meta: Json
+        }
+        Returns: undefined
+      }
+      _hr_officer_ids: { Args: never; Returns: string[] }
+      _notify: {
+        Args: { _body: string; _link: string; _title: string; _user: string }
+        Returns: undefined
+      }
+      approve_leave_request: {
+        Args: { _comment: string; _id: string }
+        Returns: {
+          approved_at: string | null
+          cancelled_at: string | null
+          created_at: string
+          department_id: string | null
+          employee_id: string
+          end_date: string
+          holiday_days: number
+          id: string
+          leave_type_id: string
+          reason: string | null
+          rejected_at: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["leave_status"]
+          submitted_at: string | null
+          supervisor_id: string | null
+          total_calendar_days: number
+          updated_at: string
+          weekend_days: number
+          working_days: number
+        }
+        SetofOptions: {
+          from: "*"
+          to: "leave_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      calculate_working_days: {
+        Args: { _end: string; _start: string }
+        Returns: {
+          calendar_days: number
+          holiday_days: number
+          weekend_days: number
+          working_days: number
+        }[]
+      }
+      cancel_leave_request: {
+        Args: { _id: string }
+        Returns: {
+          approved_at: string | null
+          cancelled_at: string | null
+          created_at: string
+          department_id: string | null
+          employee_id: string
+          end_date: string
+          holiday_days: number
+          id: string
+          leave_type_id: string
+          reason: string | null
+          rejected_at: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["leave_status"]
+          submitted_at: string | null
+          supervisor_id: string | null
+          total_calendar_days: number
+          updated_at: string
+          weekend_days: number
+          working_days: number
+        }
+        SetofOptions: {
+          from: "*"
+          to: "leave_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       current_user_has_any_role: {
         Args: { _roles: Database["public"]["Enums"]["app_role"][] }
         Returns: boolean
@@ -301,6 +608,97 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_dept_head_of: { Args: { _department_id: string }; Returns: boolean }
+      reject_leave_request: {
+        Args: { _comment: string; _id: string }
+        Returns: {
+          approved_at: string | null
+          cancelled_at: string | null
+          created_at: string
+          department_id: string | null
+          employee_id: string
+          end_date: string
+          holiday_days: number
+          id: string
+          leave_type_id: string
+          reason: string | null
+          rejected_at: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["leave_status"]
+          submitted_at: string | null
+          supervisor_id: string | null
+          total_calendar_days: number
+          updated_at: string
+          weekend_days: number
+          working_days: number
+        }
+        SetofOptions: {
+          from: "*"
+          to: "leave_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      request_leave_changes: {
+        Args: { _comment: string; _id: string }
+        Returns: {
+          approved_at: string | null
+          cancelled_at: string | null
+          created_at: string
+          department_id: string | null
+          employee_id: string
+          end_date: string
+          holiday_days: number
+          id: string
+          leave_type_id: string
+          reason: string | null
+          rejected_at: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["leave_status"]
+          submitted_at: string | null
+          supervisor_id: string | null
+          total_calendar_days: number
+          updated_at: string
+          weekend_days: number
+          working_days: number
+        }
+        SetofOptions: {
+          from: "*"
+          to: "leave_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      submit_leave_request: {
+        Args: { _id: string }
+        Returns: {
+          approved_at: string | null
+          cancelled_at: string | null
+          created_at: string
+          department_id: string | null
+          employee_id: string
+          end_date: string
+          holiday_days: number
+          id: string
+          leave_type_id: string
+          reason: string | null
+          rejected_at: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["leave_status"]
+          submitted_at: string | null
+          supervisor_id: string | null
+          total_calendar_days: number
+          updated_at: string
+          weekend_days: number
+          working_days: number
+        }
+        SetofOptions: {
+          from: "*"
+          to: "leave_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       app_role:
@@ -309,9 +707,25 @@ export type Database = {
         | "dept_head"
         | "supervisor"
         | "employee"
+      approval_action:
+        | "submit"
+        | "approve"
+        | "reject"
+        | "request_changes"
+        | "cancel"
+        | "comment"
       employee_status: "active" | "inactive" | "on_leave" | "terminated"
       employment_type: "permanent" | "contract" | "casual" | "intern"
       gender_type: "male" | "female" | "other"
+      leave_status:
+        | "draft"
+        | "pending_supervisor"
+        | "pending_dept_head"
+        | "pending_hr"
+        | "approved"
+        | "rejected"
+        | "cancelled"
+        | "changes_requested"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -446,9 +860,27 @@ export const Constants = {
         "supervisor",
         "employee",
       ],
+      approval_action: [
+        "submit",
+        "approve",
+        "reject",
+        "request_changes",
+        "cancel",
+        "comment",
+      ],
       employee_status: ["active", "inactive", "on_leave", "terminated"],
       employment_type: ["permanent", "contract", "casual", "intern"],
       gender_type: ["male", "female", "other"],
+      leave_status: [
+        "draft",
+        "pending_supervisor",
+        "pending_dept_head",
+        "pending_hr",
+        "approved",
+        "rejected",
+        "cancelled",
+        "changes_requested",
+      ],
     },
   },
 } as const
