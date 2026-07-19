@@ -254,9 +254,7 @@ function LeaveRequestDetail() {
         )}
         {canEdit && (
           <>
-            <Button asChild variant="outline">
-              <Link to="/leave-requests/$id/edit" params={{ id }}>Edit</Link>
-            </Button>
+
             {request.status === "draft" && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
