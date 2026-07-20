@@ -12,11 +12,13 @@ import {
   UserCircle,
   ClipboardList,
   BarChart3,
+  ShieldCheck,
+  Bell,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth, type AppRole } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -32,22 +34,31 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { NotificationBell } from "@/components/notification-bell";
+import { GlobalSearch } from "@/components/global-search";
 
 type NavItem = {
   to: string;
   label: string;
   icon: typeof LayoutDashboard;
   roles?: AppRole[];
+  section?: string;
 };
 
 const NAV: NavItem[] = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/leave-requests", label: "My Leave", icon: ClipboardList },
-  { to: "/approvals", label: "Approvals", icon: FileText, roles: ["supervisor", "dept_head", "hr_officer", "system_admin"] },
-  { to: "/employees", label: "Employees", icon: Users, roles: ["hr_officer", "system_admin", "dept_head"] },
-  { to: "/departments", label: "Departments", icon: Building2, roles: ["hr_officer", "system_admin"] },
-  { to: "/leave-types", label: "Leave Types", icon: CalendarDays, roles: ["hr_officer", "system_admin"] },
-  { to: "/holidays", label: "Public Holidays", icon: CalendarDays, roles: ["hr_officer", "system_admin"] },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, section: "Overview" },
+  { to: "/leave-requests", label: "My Leave", icon: ClipboardList, section: "Overview" },
+  { to: "/calendar", label: "Calendar", icon: CalendarDays, section: "Overview" },
+  { to: "/notifications", label: "Notifications", icon: Bell, section: "Overview" },
+
+  { to: "/approvals", label: "Approvals", icon: FileText, section: "Management", roles: ["supervisor", "dept_head", "hr_officer", "system_admin"] },
+  { to: "/employees", label: "Employees", icon: Users, section: "Management", roles: ["hr_officer", "system_admin", "dept_head"] },
+  { to: "/reports", label: "Reports", icon: BarChart3, section: "Management", roles: ["dept_head", "hr_officer", "system_admin"] },
+
+  { to: "/departments", label: "Departments", icon: Building2, section: "Administration", roles: ["hr_officer", "system_admin"] },
+  { to: "/leave-types", label: "Leave Types", icon: CalendarDays, section: "Administration", roles: ["hr_officer", "system_admin"] },
+  { to: "/holidays", label: "Public Holidays", icon: CalendarDays, section: "Administration", roles: ["hr_officer", "system_admin"] },
+  { to: "/settings", label: "Settings", icon: Settings, section: "Administration", roles: ["hr_officer", "system_admin"] },
+  { to: "/audit-logs", label: "Audit Logs", icon: ShieldCheck, section: "Administration", roles: ["hr_officer", "system_admin"] },
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -55,12 +66,10 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      {/* Desktop sidebar */}
       <aside className="hidden w-64 shrink-0 border-r border-sidebar-border bg-sidebar lg:flex lg:flex-col">
         <SidebarContent />
       </aside>
 
-      {/* Mobile sidebar */}
       <Sheet open={openMobile} onOpenChange={setOpenMobile}>
         <SheetContent side="left" className="w-64 border-r border-sidebar-border bg-sidebar p-0">
           <SidebarContent onNavigate={() => setOpenMobile(false)} />
@@ -81,33 +90,45 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const { roles } = useAuth();
   const location = useLocation();
   const visible = NAV.filter((n) => !n.roles || n.roles.some((r) => roles.includes(r)));
+  const grouped = visible.reduce((acc, n) => {
+    const key = n.section ?? "Menu";
+    (acc[key] ??= []).push(n);
+    return acc;
+  }, {} as Record<string, NavItem[]>);
 
   return (
     <>
       <div className="flex h-16 items-center border-b border-sidebar-border px-5">
         <BoppLogo />
       </div>
-      <nav className="flex-1 space-y-1 overflow-y-auto p-3">
-        {visible.map((item) => {
-          const active = location.pathname === item.to || location.pathname.startsWith(item.to + "/");
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={onNavigate}
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                active
-                  ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-soft"
-                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              {item.label}
-            </Link>
-          );
-        })}
+      <nav className="flex-1 space-y-4 overflow-y-auto p-3">
+        {Object.entries(grouped).map(([section, items]) => (
+          <div key={section}>
+            <p className="mb-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{section}</p>
+            <div className="space-y-1">
+              {items.map((item) => {
+                const active = location.pathname === item.to || location.pathname.startsWith(item.to + "/");
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={onNavigate}
+                    className={cn(
+                      "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                      active
+                        ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-soft"
+                        : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </nav>
       <div className="border-t border-sidebar-border p-4 text-xs text-muted-foreground">
         <div className="font-medium text-sidebar-foreground">BOPP</div>
@@ -151,6 +172,7 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
         <Menu className="h-5 w-5" />
       </Button>
       <div className="flex-1" />
+      <GlobalSearch />
       <NotificationBell />
       <ThemeToggle />
 

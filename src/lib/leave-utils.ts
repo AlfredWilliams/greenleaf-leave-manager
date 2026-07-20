@@ -33,6 +33,18 @@ export const TONE_CLASS: Record<string, string> = {
   destructive: "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20",
 };
 
+/** Deterministic hex color per leave type name, used in calendars/charts. */
+const LEAVE_TYPE_PALETTE = [
+  "#16a34a", "#0ea5e9", "#f59e0b", "#8b5cf6", "#ec4899",
+  "#ef4444", "#14b8a6", "#f97316", "#6366f1", "#84cc16",
+];
+export function leaveTypeColor(name: string | null | undefined) {
+  if (!name) return "#64748b";
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+  return LEAVE_TYPE_PALETTE[h % LEAVE_TYPE_PALETTE.length];
+}
+
 export function formatDate(d: string | Date | null | undefined) {
   if (!d) return "—";
   return new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
@@ -77,4 +89,14 @@ export const ALLOWED_DOC_TYPES = [
   "image/jpeg",
 ];
 export const ALLOWED_DOC_EXTENSIONS = ".pdf,.doc,.docx,.png,.jpg,.jpeg";
-export const MAX_DOC_SIZE = 10 * 1024 * 1024; // 10 MB
+export const MAX_DOC_SIZE = 10 * 1024 * 1024;
+
+export const PENDING_STATUSES: LeaveStatus[] = ["pending_supervisor", "pending_dept_head", "pending_hr"];
+
+export function isoDate(d: Date) {
+  return d.toISOString().slice(0, 10);
+}
+
+export function monthLabel(iso: string) {
+  return new Date(iso + "-01").toLocaleDateString("en-GB", { month: "short", year: "2-digit" });
+}
