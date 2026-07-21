@@ -137,7 +137,10 @@ export const seedDemoData = createServerFn({ method: "POST" })
 
     let inserted = 0;
     const today = new Date();
-    const statuses = ["draft", "pending_supervisor", "pending_hr", "approved", "rejected", "cancelled"];
+    const statuses: Array<"draft" | "pending_supervisor" | "pending_hr" | "approved" | "rejected" | "cancelled"> = [
+      "draft", "pending_supervisor", "pending_hr", "approved", "rejected", "cancelled",
+    ];
+    if (!annual?.id) return { note: "No Annual Leave type available", counts: {} };
     for (const emp of demoEmployees) {
       for (let i = 0; i < 8; i++) {
         const start = new Date(today);
@@ -147,7 +150,7 @@ export const seedDemoData = createServerFn({ method: "POST" })
         const status = statuses[Math.floor(Math.random() * statuses.length)];
         const { error } = await supabaseAdmin.from("leave_requests").insert({
           employee_id: emp.id,
-          leave_type_id: annual?.id ?? null,
+          leave_type_id: annual.id,
           start_date: start.toISOString().slice(0, 10),
           end_date: end.toISOString().slice(0, 10),
           reason: "Demo leave request",
