@@ -87,10 +87,19 @@ function SignInForm({ redirectTo }: { redirectTo?: string }) {
     if (!em.success) return toast.error(em.error.issues[0].message);
     if (!password) return toast.error("Enter your password");
     setBusy(true);
-    const { error } = await supabase.auth.signInWithPassword({ email: em.data, password });
+    const { error, data } = await supabase.auth.signInWithPassword({ email: em.data, password });
     setBusy(false);
     if (error) return toast.error(error.message);
     toast.success("Signed in");
+    // Check role → redirect to dashboard, or access-denied if no role
+    const userId = data.user?.id;
+    if (userId) {
+      const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", userId);
+      if (!roles || roles.length === 0) {
+        navigate({ to: "/access-denied" });
+        return;
+      }
+    }
     navigate({ to: redirectTo ?? "/dashboard" });
   };
 

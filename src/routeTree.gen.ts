@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AccessDeniedRouteImport } from './routes/access-denied'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
@@ -27,9 +28,12 @@ import { Route as AuthenticatedAuditLogsRouteImport } from './routes/_authentica
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedLeaveRequestsIndexRouteImport } from './routes/_authenticated/leave-requests.index'
 import { Route as AuthenticatedEmployeesIndexRouteImport } from './routes/_authenticated/employees/index'
+import { Route as ApiPublicBrandingAssetRouteImport } from './routes/api/public/branding-asset'
 import { Route as AuthenticatedLeaveRequestsNewRouteImport } from './routes/_authenticated/leave-requests.new'
 import { Route as AuthenticatedLeaveRequestsIdRouteImport } from './routes/_authenticated/leave-requests.$id'
 import { Route as AuthenticatedEmployeesIdRouteImport } from './routes/_authenticated/employees/$id'
+import { Route as AuthenticatedAdminToolsRouteImport } from './routes/_authenticated/admin.tools'
+import { Route as AuthenticatedAdminBrandingRouteImport } from './routes/_authenticated/admin.branding'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -44,6 +48,11 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccessDeniedRoute = AccessDeniedRouteImport.update({
+  id: '/access-denied',
+  path: '/access-denied',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -124,6 +133,11 @@ const AuthenticatedEmployeesIndexRoute =
     path: '/employees/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicBrandingAssetRoute = ApiPublicBrandingAssetRouteImport.update({
+  id: '/api/public/branding-asset',
+  path: '/api/public/branding-asset',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedLeaveRequestsNewRoute =
   AuthenticatedLeaveRequestsNewRouteImport.update({
     id: '/leave-requests/new',
@@ -142,9 +156,21 @@ const AuthenticatedEmployeesIdRoute =
     path: '/employees/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminToolsRoute = AuthenticatedAdminToolsRouteImport.update({
+  id: '/admin/tools',
+  path: '/admin/tools',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminBrandingRoute =
+  AuthenticatedAdminBrandingRouteImport.update({
+    id: '/admin/branding',
+    path: '/admin/branding',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/access-denied': typeof AccessDeniedRoute
   '/auth': typeof AuthRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -159,14 +185,18 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/admin/branding': typeof AuthenticatedAdminBrandingRoute
+  '/admin/tools': typeof AuthenticatedAdminToolsRoute
   '/employees/$id': typeof AuthenticatedEmployeesIdRoute
   '/leave-requests/$id': typeof AuthenticatedLeaveRequestsIdRoute
   '/leave-requests/new': typeof AuthenticatedLeaveRequestsNewRoute
+  '/api/public/branding-asset': typeof ApiPublicBrandingAssetRoute
   '/employees/': typeof AuthenticatedEmployeesIndexRoute
   '/leave-requests/': typeof AuthenticatedLeaveRequestsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/access-denied': typeof AccessDeniedRoute
   '/auth': typeof AuthRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -181,9 +211,12 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/admin/branding': typeof AuthenticatedAdminBrandingRoute
+  '/admin/tools': typeof AuthenticatedAdminToolsRoute
   '/employees/$id': typeof AuthenticatedEmployeesIdRoute
   '/leave-requests/$id': typeof AuthenticatedLeaveRequestsIdRoute
   '/leave-requests/new': typeof AuthenticatedLeaveRequestsNewRoute
+  '/api/public/branding-asset': typeof ApiPublicBrandingAssetRoute
   '/employees': typeof AuthenticatedEmployeesIndexRoute
   '/leave-requests': typeof AuthenticatedLeaveRequestsIndexRoute
 }
@@ -191,6 +224,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/access-denied': typeof AccessDeniedRoute
   '/auth': typeof AuthRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -205,9 +239,12 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/admin/branding': typeof AuthenticatedAdminBrandingRoute
+  '/_authenticated/admin/tools': typeof AuthenticatedAdminToolsRoute
   '/_authenticated/employees/$id': typeof AuthenticatedEmployeesIdRoute
   '/_authenticated/leave-requests/$id': typeof AuthenticatedLeaveRequestsIdRoute
   '/_authenticated/leave-requests/new': typeof AuthenticatedLeaveRequestsNewRoute
+  '/api/public/branding-asset': typeof ApiPublicBrandingAssetRoute
   '/_authenticated/employees/': typeof AuthenticatedEmployeesIndexRoute
   '/_authenticated/leave-requests/': typeof AuthenticatedLeaveRequestsIndexRoute
 }
@@ -215,6 +252,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/access-denied'
     | '/auth'
     | '/forgot-password'
     | '/reset-password'
@@ -229,14 +267,18 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/admin/branding'
+    | '/admin/tools'
     | '/employees/$id'
     | '/leave-requests/$id'
     | '/leave-requests/new'
+    | '/api/public/branding-asset'
     | '/employees/'
     | '/leave-requests/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/access-denied'
     | '/auth'
     | '/forgot-password'
     | '/reset-password'
@@ -251,15 +293,19 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/admin/branding'
+    | '/admin/tools'
     | '/employees/$id'
     | '/leave-requests/$id'
     | '/leave-requests/new'
+    | '/api/public/branding-asset'
     | '/employees'
     | '/leave-requests'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/access-denied'
     | '/auth'
     | '/forgot-password'
     | '/reset-password'
@@ -274,9 +320,12 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/_authenticated/admin/branding'
+    | '/_authenticated/admin/tools'
     | '/_authenticated/employees/$id'
     | '/_authenticated/leave-requests/$id'
     | '/_authenticated/leave-requests/new'
+    | '/api/public/branding-asset'
     | '/_authenticated/employees/'
     | '/_authenticated/leave-requests/'
   fileRoutesById: FileRoutesById
@@ -284,9 +333,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AccessDeniedRoute: typeof AccessDeniedRoute
   AuthRoute: typeof AuthRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiPublicBrandingAssetRoute: typeof ApiPublicBrandingAssetRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -310,6 +361,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/access-denied': {
+      id: '/access-denied'
+      path: '/access-denied'
+      fullPath: '/access-denied'
+      preLoaderRoute: typeof AccessDeniedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -417,6 +475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmployeesIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/branding-asset': {
+      id: '/api/public/branding-asset'
+      path: '/api/public/branding-asset'
+      fullPath: '/api/public/branding-asset'
+      preLoaderRoute: typeof ApiPublicBrandingAssetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/leave-requests/new': {
       id: '/_authenticated/leave-requests/new'
       path: '/leave-requests/new'
@@ -438,6 +503,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmployeesIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/tools': {
+      id: '/_authenticated/admin/tools'
+      path: '/admin/tools'
+      fullPath: '/admin/tools'
+      preLoaderRoute: typeof AuthenticatedAdminToolsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/branding': {
+      id: '/_authenticated/admin/branding'
+      path: '/admin/branding'
+      fullPath: '/admin/branding'
+      preLoaderRoute: typeof AuthenticatedAdminBrandingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -453,6 +532,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedAdminBrandingRoute: typeof AuthenticatedAdminBrandingRoute
+  AuthenticatedAdminToolsRoute: typeof AuthenticatedAdminToolsRoute
   AuthenticatedEmployeesIdRoute: typeof AuthenticatedEmployeesIdRoute
   AuthenticatedLeaveRequestsIdRoute: typeof AuthenticatedLeaveRequestsIdRoute
   AuthenticatedLeaveRequestsNewRoute: typeof AuthenticatedLeaveRequestsNewRoute
@@ -472,6 +553,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedAdminBrandingRoute: AuthenticatedAdminBrandingRoute,
+  AuthenticatedAdminToolsRoute: AuthenticatedAdminToolsRoute,
   AuthenticatedEmployeesIdRoute: AuthenticatedEmployeesIdRoute,
   AuthenticatedLeaveRequestsIdRoute: AuthenticatedLeaveRequestsIdRoute,
   AuthenticatedLeaveRequestsNewRoute: AuthenticatedLeaveRequestsNewRoute,
@@ -485,20 +568,12 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AccessDeniedRoute: AccessDeniedRoute,
   AuthRoute: AuthRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiPublicBrandingAssetRoute: ApiPublicBrandingAssetRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
