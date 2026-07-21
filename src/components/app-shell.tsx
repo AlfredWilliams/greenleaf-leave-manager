@@ -14,6 +14,8 @@ import {
   BarChart3,
   ShieldCheck,
   Bell,
+  Palette,
+  Wrench,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth, type AppRole } from "@/lib/auth-context";
