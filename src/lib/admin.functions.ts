@@ -106,10 +106,10 @@ export const seedDemoData = createServerFn({ method: "POST" })
     const deptList = depts ?? [];
 
     // Leave types (idempotent by name)
-    const leaveTypes = [
-      { name: "Annual Leave", default_days: 20, is_paid: true, is_active: true },
+    const leaveTypes: Array<{ name: string; default_days: number; is_paid: boolean; requires_document: boolean; is_active: boolean }> = [
+      { name: "Annual Leave", default_days: 20, is_paid: true, requires_document: false, is_active: true },
       { name: "Sick Leave", default_days: 12, is_paid: true, requires_document: true, is_active: true },
-      { name: "Casual Leave", default_days: 6, is_paid: true, is_active: true },
+      { name: "Casual Leave", default_days: 6, is_paid: true, requires_document: false, is_active: true },
     ];
     for (const lt of leaveTypes) {
       await supabaseAdmin.from("leave_types").upsert(lt, { onConflict: "name" });
