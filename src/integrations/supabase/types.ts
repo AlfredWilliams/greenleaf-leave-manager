@@ -21,6 +21,7 @@ export type Database = {
           entity: string | null
           entity_id: string | null
           id: string
+          is_demo: boolean
           meta: Json | null
           user_id: string | null
         }
@@ -30,6 +31,7 @@ export type Database = {
           entity?: string | null
           entity_id?: string | null
           id?: string
+          is_demo?: boolean
           meta?: Json | null
           user_id?: string | null
         }
@@ -39,8 +41,93 @@ export type Database = {
           entity?: string | null
           entity_id?: string | null
           id?: string
+          is_demo?: boolean
           meta?: Json | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      company_branding: {
+        Row: {
+          accent_color: string
+          address: string | null
+          created_at: string
+          description: string | null
+          email: string | null
+          email_signature: string | null
+          favicon_url: string | null
+          id: string
+          is_active: boolean
+          letterhead_url: string | null
+          login_bg_url: string | null
+          logo_url: string | null
+          name: string
+          phone: string | null
+          postal_address: string | null
+          primary_color: string
+          report_footer: string | null
+          report_header: string | null
+          secondary_color: string
+          short_name: string
+          slogan: string | null
+          social_links: Json
+          updated_at: string
+          website: string | null
+          welcome_banner_url: string | null
+        }
+        Insert: {
+          accent_color?: string
+          address?: string | null
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          email_signature?: string | null
+          favicon_url?: string | null
+          id?: string
+          is_active?: boolean
+          letterhead_url?: string | null
+          login_bg_url?: string | null
+          logo_url?: string | null
+          name?: string
+          phone?: string | null
+          postal_address?: string | null
+          primary_color?: string
+          report_footer?: string | null
+          report_header?: string | null
+          secondary_color?: string
+          short_name?: string
+          slogan?: string | null
+          social_links?: Json
+          updated_at?: string
+          website?: string | null
+          welcome_banner_url?: string | null
+        }
+        Update: {
+          accent_color?: string
+          address?: string | null
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          email_signature?: string | null
+          favicon_url?: string | null
+          id?: string
+          is_active?: boolean
+          letterhead_url?: string | null
+          login_bg_url?: string | null
+          logo_url?: string | null
+          name?: string
+          phone?: string | null
+          postal_address?: string | null
+          primary_color?: string
+          report_footer?: string | null
+          report_header?: string | null
+          secondary_color?: string
+          short_name?: string
+          slogan?: string | null
+          social_links?: Json
+          updated_at?: string
+          website?: string | null
+          welcome_banner_url?: string | null
         }
         Relationships: []
       }
@@ -79,6 +166,7 @@ export type Database = {
           full_name: string
           gender: Database["public"]["Enums"]["gender_type"] | null
           id: string
+          is_demo: boolean
           leave_balance: number
           phone: string | null
           position_id: string | null
@@ -98,6 +186,7 @@ export type Database = {
           full_name: string
           gender?: Database["public"]["Enums"]["gender_type"] | null
           id: string
+          is_demo?: boolean
           leave_balance?: number
           phone?: string | null
           position_id?: string | null
@@ -117,6 +206,7 @@ export type Database = {
           full_name?: string
           gender?: Database["public"]["Enums"]["gender_type"] | null
           id?: string
+          is_demo?: boolean
           leave_balance?: number
           phone?: string | null
           position_id?: string | null
@@ -266,6 +356,7 @@ export type Database = {
           end_date: string
           holiday_days: number
           id: string
+          is_demo: boolean
           leave_type_id: string
           reason: string | null
           rejected_at: string | null
@@ -287,6 +378,7 @@ export type Database = {
           end_date: string
           holiday_days?: number
           id?: string
+          is_demo?: boolean
           leave_type_id: string
           reason?: string | null
           rejected_at?: string | null
@@ -308,6 +400,7 @@ export type Database = {
           end_date?: string
           holiday_days?: number
           id?: string
+          is_demo?: boolean
           leave_type_id?: string
           reason?: string | null
           rejected_at?: string | null
@@ -392,6 +485,7 @@ export type Database = {
           body: string | null
           created_at: string
           id: string
+          is_demo: boolean
           link: string | null
           read: boolean
           title: string
@@ -401,6 +495,7 @@ export type Database = {
           body?: string | null
           created_at?: string
           id?: string
+          is_demo?: boolean
           link?: string | null
           read?: boolean
           title: string
@@ -410,6 +505,7 @@ export type Database = {
           body?: string | null
           created_at?: string
           id?: string
+          is_demo?: boolean
           link?: string | null
           read?: boolean
           title?: string
@@ -539,6 +635,7 @@ export type Database = {
           end_date: string
           holiday_days: number
           id: string
+          is_demo: boolean
           leave_type_id: string
           reason: string | null
           rejected_at: string | null
@@ -578,6 +675,7 @@ export type Database = {
           end_date: string
           holiday_days: number
           id: string
+          is_demo: boolean
           leave_type_id: string
           reason: string | null
           rejected_at: string | null
@@ -620,6 +718,7 @@ export type Database = {
           end_date: string
           holiday_days: number
           id: string
+          is_demo: boolean
           leave_type_id: string
           reason: string | null
           rejected_at: string | null
@@ -650,6 +749,7 @@ export type Database = {
           end_date: string
           holiday_days: number
           id: string
+          is_demo: boolean
           leave_type_id: string
           reason: string | null
           rejected_at: string | null
@@ -680,6 +780,7 @@ export type Database = {
           end_date: string
           holiday_days: number
           id: string
+          is_demo: boolean
           leave_type_id: string
           reason: string | null
           rejected_at: string | null
